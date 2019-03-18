@@ -3,8 +3,10 @@
 # https://hub.docker.com/_/mysql
 IMAGE=mysql:5
 NAME=mysql-5
+NETWORK=mysql-nw
+docker network create ${NETWORK}
 # start server container
-docker run --name ${NAME} -e MYSQL_RANDOM_ROOT_PASSWORD=yes --rm -d ${IMAGE}
+docker run --network ${NETWORK} --name ${NAME} -e MYSQL_RANDOM_ROOT_PASSWORD=yes --rm -d ${IMAGE}
 while :
 do
     echo "waiting mysql server is started..."
@@ -18,12 +20,13 @@ done
 while :
 do
     echo "waiting mysql server port is opened..."
-    docker run -it --link ${NAME}:server --rm ${IMAGE} sh -c 'exec mysqladmin ping -hserver --silent'
+    docker run --network ${NETWORK} -it --rm ${IMAGE} sh -c "exec mysqladmin ping -h${NAME} --silent"
     if [ $? -eq 0 ]; then
 	break
     fi
     sleep 1
 done
 # start client
-docker run -it --link ${NAME}:server -e MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD} --rm ${IMAGE} sh -c 'exec mysql -hserver -uroot -p"$MYSQL_ROOT_PASSWORD"'
+docker run --network ${NETWORK} -it --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD}"
 docker kill ${NAME}
+docker network rm ${NETWORK}
