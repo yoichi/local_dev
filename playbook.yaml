@@ -24,6 +24,7 @@
     - name: Install misc packages
       apt:
         name:
+          - jq
           - pwgen
           - virtualenvwrapper
         state: present
