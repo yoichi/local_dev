@@ -2,7 +2,7 @@
 # MySQL playground with the official image on Docker Hub
 # https://hub.docker.com/_/mysql
 IMAGE=${IMAGE:-mysql:5}
-NAME=mysql-5
+NAME=mysql-server
 NETWORK=mysql-nw
 docker network create ${NETWORK}
 # start server container
