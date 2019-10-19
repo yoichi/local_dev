@@ -10,7 +10,7 @@ docker run --network ${NETWORK} --name ${NAME} -e MYSQL_RANDOM_ROOT_PASSWORD=yes
 while :
 do
     echo "waiting mysql server is started..."
-    ROOT_PASSWORD=$(docker logs ${NAME} 2>/dev/null|sed -n "s/GENERATED ROOT PASSWORD: \(.*\)$/\1/p")
+    ROOT_PASSWORD=$(docker logs ${NAME} 2>/dev/null|sed -n "s/.*GENERATED ROOT PASSWORD: \(.*\)$/\1/p")
     if [ -n "${ROOT_PASSWORD}" ]; then
 	echo ${ROOT_PASSWORD}
 	break
