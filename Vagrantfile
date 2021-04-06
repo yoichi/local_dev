@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "bento/ubuntu-18.04"
+  config.vm.box = "bento/ubuntu-20.04"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -67,6 +67,10 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
+
+  # workaround for upstream issue https://github.com/hashicorp/vagrant/issues/11544
+  config.vm.provision :shell, inline: "apt update && apt install -qy ansible"
+
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "playbook.yaml"
     ansible.compatibility_mode = "2.0"
