@@ -21,6 +21,12 @@
       user: name=vagrant
             groups=docker
             append=yes
+    - name: Install manpages
+      apt:
+        name:
+          - manpages-dev
+          - manpages-posix
+          - manpages-posix-dev
     - name: Install misc packages
       apt:
         name:
