@@ -33,5 +33,6 @@
           - jq
           - pwgen
           - virtualenvwrapper
+          - moreutils
         state: present
         update_cache: yes
