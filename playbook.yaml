@@ -34,5 +34,6 @@
           - pwgen
           - virtualenvwrapper
           - moreutils
+          - uniutils
         state: present
         update_cache: yes
