@@ -27,6 +27,10 @@
           - manpages-dev
           - manpages-posix
           - manpages-posix-dev
+    - name: Install python related packages
+      apt:
+        name:
+          - python3-venv
     - name: Install misc packages
       apt:
         name:
