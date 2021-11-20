@@ -27,10 +27,19 @@
           - manpages-dev
           - manpages-posix
           - manpages-posix-dev
+    - name: Add deadsnakes ppa
+      ansible.builtin.apt_repository:
+        repo: ppa:deadsnakes/ppa
     - name: Install python related packages
       apt:
         name:
-          - python3-venv
+          - python3.10-venv
+    - name: create virtualenv
+      become: yes
+      become_user: vagrant
+      shell: python3.10 -m venv venvs/default
+      args:
+        chdir: /home/vagrant
     - name: Install misc packages
       apt:
         name:
