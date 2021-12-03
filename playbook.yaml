@@ -40,6 +40,13 @@
       shell: python3.10 -m venv venvs/default
       args:
         chdir: /home/vagrant
+    - name: Add longsleep/golang-backports ppa
+      ansible.builtin.apt_repository:
+        repo: ppa:longsleep/golang-backports
+    - name: Install golang
+      apt:
+        name:
+          - golang
     - name: Install misc packages
       apt:
         name:
