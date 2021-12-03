@@ -47,6 +47,12 @@
       apt:
         name:
           - golang
+    - name: Install go packages
+      become: yes
+      become_user: vagrant
+      shell: |
+        go get -u github.com/monochromegane/the_platinum_searcher/...
+        go install github.com/x-motemen/ghq@latest
     - name: Install misc packages
       apt:
         name:
