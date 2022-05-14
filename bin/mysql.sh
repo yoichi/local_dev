@@ -7,6 +7,10 @@ NETWORK=mysql-nw
 docker network create ${NETWORK}
 # start server container
 docker run --network ${NETWORK} --name ${NAME} -e MYSQL_RANDOM_ROOT_PASSWORD=yes --rm -d ${IMAGE}
+if [ $? -ne 0 ]; then
+    docker network rm ${NETWORK}
+    exit 1
+fi
 while :
 do
     echo "waiting mysql server is started..."

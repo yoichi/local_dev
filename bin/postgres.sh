@@ -8,6 +8,10 @@ ROOT_PASSWORD=$(pwgen -ysBv -N 1)
 docker network create ${NETWORK}
 # start server container
 docker run --network ${NETWORK} --name ${NAME} -e POSTGRES_PASSWORD="${ROOT_PASSWORD}" --rm -d ${IMAGE}
+if [ $? -ne 0 ]; then
+    docker network rm ${NETWORK}
+    exit 1
+fi
 while :
 do
     echo "waiting server port is opened..."
