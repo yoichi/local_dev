@@ -4,6 +4,7 @@
 IMAGE=${IMAGE:-mysql:5}
 NAME=mysql-server
 NETWORK=mysql-nw
+DATABASE=sandbox
 docker network create ${NETWORK}
 # start server container
 docker run --network ${NETWORK} --name ${NAME} -e MYSQL_RANDOM_ROOT_PASSWORD=yes --rm -d ${IMAGE}
@@ -30,7 +31,12 @@ do
     fi
     sleep 1
 done
+# create sandbox database
+docker run --network ${NETWORK} -it --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD} -e \"CREATE DATABASE ${DATABASE}\""
+if [ $? -ne 0 ]; then
+    echo "error creating database"
+fi
 # start client
-docker run --network ${NETWORK} -it --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD}"
+docker run --network ${NETWORK} -it --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD} ${DATABASE}"
 docker kill ${NAME}
 docker network rm ${NETWORK}
