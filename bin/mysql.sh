@@ -31,6 +31,8 @@ do
     fi
     sleep 1
 done
+# import sample database
+curl -sS https://downloads.mysql.com/docs/world-db.tar.gz |tar zxf - world-db/world.sql -O | docker run --network ${NETWORK} -i --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD}"
 # create sandbox database
 docker run --network ${NETWORK} -i --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD} -e \"CREATE DATABASE ${DATABASE}\""
 if [ $? -ne 0 ]; then
