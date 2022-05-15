@@ -32,7 +32,7 @@ do
     sleep 1
 done
 # create sandbox database
-docker run --network ${NETWORK} -it --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD} -e \"CREATE DATABASE ${DATABASE}\""
+docker run --network ${NETWORK} -i --rm ${IMAGE} sh -c "exec mysql -h${NAME} -uroot -p${ROOT_PASSWORD} -e \"CREATE DATABASE ${DATABASE}\""
 if [ $? -ne 0 ]; then
     echo "error creating database"
 fi
