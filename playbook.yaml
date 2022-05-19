@@ -17,7 +17,6 @@
           - curl
           - software-properties-common
           - docker-ce
-        state: present
         update_cache: yes
     - name: Add ansible user to docker group
       user: name=vagrant
@@ -57,5 +56,3 @@
           - virtualenvwrapper
           - moreutils
           - uniutils
-        state: present
-        update_cache: yes
