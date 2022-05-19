@@ -48,6 +48,10 @@
       shell: |
         go get -u github.com/monochromegane/the_platinum_searcher/...
         go install github.com/x-motemen/ghq@latest
+    - name: Install rust
+      apt:
+        name:
+          - rust-all
     - name: Install misc packages
       apt:
         name:
